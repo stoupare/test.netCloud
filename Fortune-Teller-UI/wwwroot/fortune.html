@@ -1,0 +1,4 @@
+﻿<div ng-repeat="buzz in buzzgraph track by $index">
+    <p style="display:inline">Text:</p><p style="display:inline" ng-repeat="name in buzz.names track by $index">{{name}}, </p>
+    <p>Value:{{buzz.value}} Excluded: {{buzz.excluded}}</p>
+    </div>
