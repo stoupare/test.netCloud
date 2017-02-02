@@ -29,5 +29,10 @@ namespace Fortune_Teller_UI.Controllers
             return await _fortunes.GetBuzzgraphAsync();
         }
 
+        [HttpPost("shuffle")]
+        public string shuffle([FromBody] Mention req)
+        {
+            return _fortunes.shuffle(req);
+        }
     }
 }

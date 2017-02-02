@@ -41,30 +41,34 @@ namespace Fortune_Teller_UI.Services
             //Test _manager
             getBuzzgraphResult();
         }
+    
+        public string shuffle(Mention req)
+        { 
 
-        private void getBuzzgraphResult(IDiscoveryClient client)
+                char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
+
+                string[] words = req.Text.Split(delimiterChars);
+
+
+                reshuffle(words);
+                return string.Join(" ", words);
+            }
+
+
+        void reshuffle(string[] items)
         {
-            IList<String> serviceNames = client.Services;
-            foreach (String serv in serviceNames)
+            Random rand = new Random();
+
+            for (int i = 0; i < items.Length - 1; i++)
             {
-                IList<IServiceInstance> cc = client.GetInstances(serv);
-                if (cc.Count > 0)
-                {
-                    IServiceInstance service = cc[0];
-                    Debug.WriteLine(service.Uri);
-                    BuzzGraph[] buzzGraphs = SendReqToBuzzService(new Uri(service.Uri, BUZZGRAPH_EP));
-                    foreach (BuzzGraph buzz in buzzGraphs)
-                    {
-                        string allNames = "";
-                        foreach (string name in buzz.Names)
-                        {
-                            allNames += name + ", ";
-                        }
-                        Debug.WriteLine("Buzz NAMES :" + allNames + ", And VALUE is: " + buzz.Value+ ", Excluded: " + buzz.Excluded);
-                    }
-                }
+                int j = rand.Next(i, items.Length);
+                string temp = items[i];
+                items[i] = items[j];
+                items[j] = temp;
             }
         }
+
+        /* Below Random Buzzgraph Functions*/
 
         private void getBuzzgraphResult()
         {

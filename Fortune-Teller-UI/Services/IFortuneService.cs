@@ -8,5 +8,7 @@ namespace Fortune_Teller_UI.Services
     public interface IFortuneService
     {
         Task<string> GetBuzzgraphAsync();
+
+        string shuffle(Mention req);
     }
 }
